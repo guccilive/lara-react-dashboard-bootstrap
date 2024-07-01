@@ -24,20 +24,26 @@ class DatabaseSeeder extends Seeder
         //     'email' => 'test@example.com',
         // ]);
 
-        $data = $this->importJsonData();
-
-        // Dashboard::create([
-        //     'type' => $data['key'],
-        //     'metadata' => $data['value']
-        // ]);
-
+        $this->cardData();
+        $this->reportChart();
         
     }
 
-    public function importJsonData()
-    {
+    private function cardData(){
         $filePath = resource_path('js/api/info.json');
 
+        $data = $this->importJsonData($filePath);
+    }
+
+    private function reportChart(){
+        $filePath = resource_path('js/api/data.json');
+
+        $data = $this->importJsonData($filePath);
+    }
+
+    public function importJsonData($filePath)
+    {
+        
         if (!File::exists($filePath)) {
             return response()->json(['error' => 'File does not exist.'], 404);
         }
@@ -59,9 +65,10 @@ class DatabaseSeeder extends Seeder
     private function createDashboardData($meta, $type)
     {
         foreach ($meta as $key => $item) {
+            $data = $type == 'options' ? [$key => $item] : $item;
             Dashboard::create([
                 'type' => $type,
-                'metadata' =>json_encode($item),
+                'metadata' =>json_encode($data),
             ]);
         }
     }

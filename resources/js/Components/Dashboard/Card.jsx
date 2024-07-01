@@ -3,7 +3,7 @@ import './card.css'
 import CardFilter from './CardFilter';
 
 function Card({ card }) {
-    const metadata = JSON.parse(card.metadata);
+    // const metadata = JSON.parse(card.metadata);
 
     const [filter, setFilter] = useState('Today');
     const handleFilterChange = filter => {
@@ -15,29 +15,29 @@ function Card({ card }) {
                 <CardFilter filterChange={handleFilterChange} />
                 <div className='card-body'>
                     <h5 className="card-title">
-                        {metadata.name} <span>| {filter}</span>
+                        {card.name} <span>| {filter}</span>
                     </h5>
                     <div className="d-flex align-items-center">
                         <div className="card-icon rounded-circle d-flex align-items-center justify-content-center">
-                            <i className={metadata.icon}></i>
+                            <i className={card.icon}></i>
                         </div>
                         <div className="ps-3">
                             <h6>
-                                {metadata.name === 'Revenue'
-                                    ? '$' + metadata.amount.toLocaleString('en-US')
-                                    : metadata.amount.toLocaleString('en-US')}
+                                {card.name === 'Revenue'
+                                    ? '$' + card.amount.toLocaleString('en-US')
+                                    : card.amount.toLocaleString('en-US')}
                             </h6>
                             <span
-                                className={`${metadata.percentage > 0
+                                className={`${card.percentage > 0
                                 ? 'text-success' : 'text-danger'
                                 } small pt-1 fw-bold`}>
-                                {metadata.percentage > 0
-                                    ? metadata.percentage * 100
-                                    : -metadata.percentage * 100}
+                                {card.percentage > 0
+                                    ? card.percentage * 100
+                                    : -card.percentage * 100}
                                 %
                             </span>
                             <span className="text-muted small pt-2 ps-1">
-                                {metadata.percentage > 0 ? 'increase' : 'decrease'}
+                                {card.percentage > 0 ? 'increase' : 'decrease'}
                             </span>
                         </div>
                     </div>
